@@ -1,7 +1,3 @@
+platform :ios, '7.0'
+
 pod "EPSReactiveTableViewController", :path => "../EPSReactiveTableViewController.podspec"
-
-target "Demo" do
-end
-
-target "DemoTests" do
-end
