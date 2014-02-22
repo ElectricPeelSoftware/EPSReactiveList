@@ -10,9 +10,7 @@ Subclass `EPSReactiveTableViewController`, and write an `init` method which call
 - (id)init {
     EPSExampleViewModel *viewModel = [EPSExampleViewModel new];
     self = [super initWithStyle:UITableViewStylePlain bindingToKeyPath:@"sortedObjects" onObject:viewModel];
-
     ...
-
     return self;
 }
 ```
@@ -23,7 +21,6 @@ Override `tableView:cellForObject:atIndexPath:`.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     // Setup the cell using `object`
-
     return cell;
 }
 ```
@@ -33,7 +30,6 @@ If you want to know when a cell is tapped on, subscribe to the `didSelectRowSign
 ```objective-c
 [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
     RACTupleUnpack(NSString *text, NSIndexPath *indexPath, UITableView *tableView) = tuple;
-    
     // Do something with `object`
 }];
 ```
