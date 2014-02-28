@@ -25,6 +25,8 @@ If you want to know when a cell is tapped on, subscribe to the `didSelectRowSign
 }];
 ```
 
+You don’t need to write any `<UITableViewDataSource>` methods.
+
 For a more complete example of how to use `EPSReactiveTableViewController`, see the [example project](https://github.com/ElectricPeelSoftware/EPSReactiveTableViewController/tree/master/Project).
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
