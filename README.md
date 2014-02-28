@@ -50,7 +50,7 @@ EPSReactiveTableViewController is available through [CocoaPods](http://cocoapods
 pod "EPSReactiveTableViewController"
 ```
 
-Alternatively, include `EPSReactiveTableViewController.h` and `EPSReactiveTableViewController.m` in your project, and install [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) 2.2. by following their [installation instructions](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/README.md#importing-reactivecocoa).
+Alternatively, include `EPSReactiveTableViewController.h` and `EPSReactiveTableViewController.m` in your project, and install [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) 2.2 by following their [installation instructions](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/README.md#importing-reactivecocoa).
 
 ## License
 
