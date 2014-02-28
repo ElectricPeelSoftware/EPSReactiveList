@@ -12,6 +12,8 @@
 
 @protocol EPSReactiveTableViewCell;
 
+#pragma mark - EPSReactiveTableViewController
+
 @interface EPSReactiveTableViewController : UITableViewController
 
 /**
@@ -57,9 +59,12 @@
  */
 - (id)objectForIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ Registers a cell class for use in rows that correspond to objects which are members of the given object class.
+ @param cellClass A \c UITableViewCell subclass. \c cellClass must conform to \c <EPSReactiveTableViewCell>.
+ @param objectClass A class of model object that’s contained in the observed array.
+ */
 - (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass;
-
-// Methods to Override
 
 /**
  @param style The table view style to use.
@@ -70,7 +75,8 @@
 
 /**
  Override this method instead of \c -tableView:cellForRowAtIndexPath.
- 
+ @note Overriding this method is only necessary if you haven’t registered a cell class to use.
+ @see -registerCellClass:forObjectsWithClass:
  @param object An object from the observed array.
  @param indexPath The index path corresponding to \c object.
  */
@@ -78,8 +84,16 @@
 
 @end
 
+#pragma mark - <EPSReactiveTableViewCell>
+
+/**
+ Cell classes registered for use in \c registerCellClass:forObjectsWithClass: must conform to this protocol.
+ */
 @protocol EPSReactiveTableViewCell <NSObject>
 
+/**
+ This property will be set in \c -tableView:cellForRowAtIndexPath: with the cell’s corresponding object from the observed array.
+ */
 @property (nonatomic) id object;
 
 @end
