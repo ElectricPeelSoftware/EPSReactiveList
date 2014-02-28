@@ -10,6 +10,8 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+@protocol EPSReactiveTableViewCell;
+
 @interface EPSReactiveTableViewController : UITableViewController
 
 /**
@@ -55,6 +57,8 @@
  */
 - (id)objectForIndexPath:(NSIndexPath *)indexPath;
 
+- (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass;
+
 // Methods to Override
 
 /**
@@ -71,5 +75,11 @@
  @param indexPath The index path corresponding to \c object.
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id)object atIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+@protocol EPSReactiveTableViewCell <NSObject>
+
+@property (nonatomic) id object;
 
 @end

@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class EPSNote;
+
 @interface EPSExampleViewModel : NSObject
 
-@property (nonatomic) NSArray *sortedObjects;
+@property (nonatomic) NSArray *sortedNotes;
 
 @property (nonatomic) BOOL sortAscending;
 
-- (void)addObject:(NSString *)object;
-- (void)removeObject:(NSString *)object;
+- (void)addNote:(EPSNote *)object;
+- (void)removeNote:(EPSNote *)object;
 
 @end
