@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "EPSReactiveTableViewController"
-  s.version          = "1.0.0"
+  s.version          = "1.1.0"
   s.summary          = "A table view controller that automatically populates a table view, and animates the insertion and deletion of rows."
   s.description      = "EPSReactiveTableViewController is a subclass of `UITableViewController` that automatically populates a table view, and animates the insertion and deletion of rows by observing changes to an array of model objects."
 
