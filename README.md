@@ -4,24 +4,15 @@
 
 ## Usage
 
-Subclass `EPSReactiveTableViewController`, and write an `init` method which calls `initWithStyle:bindingToKeyPath:onObject:` on `super` to set up the binding. The value at the key path must always be an `NSArray` containing objects that implement `-isEqual:` and `-hash`. No object should appear in the array more than once.
+Subclass `EPSReactiveTableViewController`, and write an `init` method which calls `initWithStyle:bindingToKeyPath:onObject:` on `super` to set up the binding. The value at the key path must always be an `NSArray` containing objects that implement `-isEqual:` and `-hash`. No object should appear in the array more than once. In the `init` method, register a cell class for use with the class of object that will be contained in the observed array. (The cell class must conform to `<EPSReactiveTableViewCell>`.)
 
 ```objective-c
 - (id)init {
     EPSExampleViewModel *viewModel = [EPSExampleViewModel new];
     self = [super initWithStyle:UITableViewStylePlain bindingToKeyPath:@"sortedObjects" onObject:viewModel];
+    [self registerCellClass:[EPSNoteCell class] forObjectsWithClass:[EPSNote class]];
     ...
     return self;
-}
-```
-
-Override `tableView:cellForObject:atIndexPath:`.
-
-```objective-c
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    // Setup the cell using `object`
-    return cell;
 }
 ```
 
@@ -29,12 +20,12 @@ If you want to know when a cell is tapped on, subscribe to the `didSelectRowSign
 
 ```objective-c
 [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
-    RACTupleUnpack(NSString *text, NSIndexPath *indexPath, UITableView *tableView) = tuple;
+    RACTupleUnpack(id object, NSIndexPath *indexPath, UITableView *tableView) = tuple;
     // Do something with `object`
 }];
 ```
 
-For a more complete example of how to use `EPSReactiveTableViewController`, see the [example project](https://github.com/ElectricPeelSoftware/EPSReactiveTableView/tree/master/Example).
+For a more complete example of how to use `EPSReactiveTableViewController`, see the [example project](https://github.com/ElectricPeelSoftware/EPSReactiveTableViewController/tree/master/Project).
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
