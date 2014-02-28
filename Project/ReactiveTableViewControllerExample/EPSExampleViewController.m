@@ -11,6 +11,8 @@
 #import "EPSExampleViewModel.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <ReactiveCocoa/RACEXTKeyPathCoding.h>
+#import "EPSNote.h"
+#import "EPSNoteCell.h"
 
 @interface EPSExampleViewController ()
 
@@ -23,10 +25,12 @@
 - (id)init
 {
     EPSExampleViewModel *viewModel = [EPSExampleViewModel new];
-    self = [super initWithStyle:UITableViewStylePlain bindingToKeyPath:@keypath(viewModel, sortedObjects) onObject:viewModel];
+    self = [super initWithStyle:UITableViewStylePlain bindingToKeyPath:@keypath(viewModel, sortedNotes) onObject:viewModel];
     if (self == nil) return nil;
     
     _viewModel = viewModel;
+    
+    [self registerCellClass:[EPSNoteCell class] forObjectsWithClass:[EPSNote class]];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addObject:)];
@@ -44,9 +48,9 @@
     
     // Show an alert when a row is tapped
     [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
-        RACTupleUnpack(NSString *text, NSIndexPath *indexPath, UITableView *tableView) = tuple;
+        RACTupleUnpack(EPSNote *note, NSIndexPath *indexPath, UITableView *tableView) = tuple;
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:text message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:note.text message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -55,28 +59,16 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:NSStringFromClass(UITableViewCell.class)];
-}
-
 - (void)addObject:(id)sender {
-    [self.viewModel addObject:[NSString stringWithFormat:@"%i", self.viewModel.sortedObjects.count]];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
-    NSString *string = object;
+    EPSNote *note = [EPSNote new];
+    note.text = [NSString stringWithFormat:@"%i", self.viewModel.sortedNotes.count];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(UITableViewCell.class) forIndexPath:indexPath];
-    cell.textLabel.text = string;
-    
-    return cell;
+    [self.viewModel addNote:note];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    id object = [self objectForIndexPath:indexPath];
-    [self.viewModel removeObject:object];
+    EPSNote *note = [self objectForIndexPath:indexPath];
+    [self.viewModel removeNote:note];
 }
 
 @end

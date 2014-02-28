@@ -16,6 +16,7 @@
 @property (readwrite, nonatomic) RACSignal *didSelectRowSignal;
 
 @property (nonatomic) NSArray *objects;
+@property (nonatomic) NSDictionary *identifiersForClasses;
 
 @end
 
@@ -30,6 +31,7 @@
     _animateChanges = YES;
     _insertAnimation = UITableViewRowAnimationAutomatic;
     _deleteAnimation = UITableViewRowAnimationAutomatic;
+    _identifiersForClasses = @{};
     
     RAC(self, objects) = [[object
         rac_valuesForKeyPath:keyPath observer:self]
@@ -48,6 +50,15 @@
         }];
     
     return self;
+}
+
+- (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass {
+    NSString *identifier = [EPSReactiveTableViewController identifierFromCellClass:cellClass objectClass:objectClass];
+    [self.tableView registerClass:cellClass forCellReuseIdentifier:identifier];
+    
+    NSMutableDictionary *dictionary = [self.identifiersForClasses mutableCopy];
+    dictionary[NSStringFromClass(objectClass)] = identifier;
+    self.identifiersForClasses = dictionary;
 }
 
 - (NSIndexPath *)indexPathForObject:(id)object {
@@ -133,6 +144,14 @@
         }];
 }
 
++ (NSString *)identifierFromCellClass:(Class)cellClass objectClass:(Class)objectClass {
+    return [NSString stringWithFormat:@"EPSReactiveTableViewController-%@-%@", NSStringFromClass(cellClass), NSStringFromClass(objectClass)];
+}
+
+- (NSString *)identifierForObject:(id)object {
+    return self.identifiersForClasses[NSStringFromClass([object class])];
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -144,7 +163,22 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self tableView:tableView cellForObject:[self objectForIndexPath:indexPath] atIndexPath:indexPath];
+    id object = [self objectForIndexPath:indexPath];
+    NSString *identifier = [self identifierForObject:object];
+    
+    if (identifier == nil) {
+        return [self tableView:tableView cellForObject:object atIndexPath:indexPath];
+    }
+    
+    UITableViewCell <EPSReactiveTableViewCell> *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    if ([[cell class] conformsToProtocol:@protocol(EPSReactiveTableViewCell)] == NO) {
+        NSLog(@"EPSReactiveTableViewController Error: %@ does not conform to the <EPSReactiveTableViewCell> protocol.", NSStringFromClass([cell class]));
+    }
+    
+    cell.object = object;
+    
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate Methods

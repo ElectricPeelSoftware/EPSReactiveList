@@ -11,9 +11,11 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <ReactiveCocoa/RACEXTKeyPathCoding.h>
 
+#import "EPSNote.h"
+
 @interface EPSExampleViewModel ()
 
-@property (nonatomic) NSSet *objects;
+@property (nonatomic) NSSet *notes;
 
 @end
 
@@ -23,26 +25,33 @@
     self = [super init];
     if (self == nil) return nil;
     
-    _objects = [NSSet setWithArray:@[ @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z" ]];
+    _notes = [NSSet setWithArray:[[@[ @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z" ].rac_sequence
+        map:^EPSNote *(NSString *string) {
+            EPSNote *note = [EPSNote new];
+            note.text = string;
+            
+            return note;
+        }]
+        array]];
     _sortAscending = YES;
     
-    RAC(self, sortedObjects) = [RACSignal
-        combineLatest:@[ RACObserve(self, objects), RACObserve(self, sortAscending) ]
+    RAC(self, sortedNotes) = [RACSignal
+        combineLatest:@[ RACObserve(self, notes), RACObserve(self, sortAscending) ]
         reduce:^NSArray *(NSSet *objects, NSNumber *sortAscending){
-            return [objects sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:sortAscending.boolValue selector:@selector(localizedStandardCompare:)] ]];
+            return [objects sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:sortAscending.boolValue selector:@selector(localizedStandardCompare:)] ]];
         }];
     
     return self;
 }
 
-- (void)addObject:(NSString *)object {
-    self.objects = [self.objects setByAddingObject:object];
+- (void)addNote:(EPSNote *)object {
+    self.notes = [self.notes setByAddingObject:object];
 }
 
-- (void)removeObject:(NSString *)object {
-    NSMutableSet *objects = self.objects.mutableCopy;
-    [objects removeObject:object];
-    self.objects = objects;
+- (void)removeNote:(EPSNote *)object {
+    NSMutableSet *notes = self.notes.mutableCopy;
+    [notes removeObject:object];
+    self.notes = notes;
 }
 
 @end
