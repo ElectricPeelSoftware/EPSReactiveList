@@ -50,7 +50,17 @@
     [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
         RACTupleUnpack(EPSNote *note, NSIndexPath *indexPath, UITableView *tableView) = tuple;
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:note.text message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Selected: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }];
+    
+    // Show an alert when an accessory is tapped
+    [self.accessoryButtonTappedSignal subscribeNext:^(RACTuple *tuple) {
+        RACTupleUnpack(EPSNote *note, NSIndexPath *indexPath, UITableView *tableView) = tuple;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Accessory: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

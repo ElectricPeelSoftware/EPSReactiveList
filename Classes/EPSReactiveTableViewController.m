@@ -14,6 +14,7 @@
 @interface EPSReactiveTableViewController ()
 
 @property (readwrite, nonatomic) RACSignal *didSelectRowSignal;
+@property (readwrite, nonatomic) RACSignal *accessoryButtonTappedSignal;
 
 @property (nonatomic) NSArray *objects;
 @property (nonatomic) NSDictionary *identifiersForClasses;
@@ -42,6 +43,18 @@
     
     self.didSelectRowSignal = [[didSelectMethodSignal
         zipWith:objectsWhenSelected]
+        map:^RACTuple *(RACTuple *tuple) {
+            RACTupleUnpack(RACTuple *arguments, NSArray *objects) = tuple;
+            RACTupleUnpack(UITableView *tableView, NSIndexPath *indexPath) = arguments;
+            id object = [EPSReactiveTableViewController objectForIndexPath:indexPath inArray:objects];
+            return RACTuplePack(object, indexPath, tableView);
+        }];
+    
+    RACSignal *accessoryTappedSignal = [self rac_signalForSelector:@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)];
+    RACSignal *objectsWhenAccessoryTapped = [RACObserve(self, objects) sample:accessoryTappedSignal];
+
+    self.accessoryButtonTappedSignal = [[accessoryTappedSignal
+        zipWith:objectsWhenAccessoryTapped]
         map:^RACTuple *(RACTuple *tuple) {
             RACTupleUnpack(RACTuple *arguments, NSArray *objects) = tuple;
             RACTupleUnpack(UITableView *tableView, NSIndexPath *indexPath) = arguments;
