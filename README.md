@@ -2,6 +2,8 @@
 
 `EPSReactiveTableViewController` is a subclass of `UITableViewController` that automatically populates a table view, and animates the insertion and deletion of rows by observing changes to an array of model objects. It uses [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa), and is designed to be used with the [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel) pattern.
 
+[EPSReactiveCollectionViewController](https://github.com/ElectricPeelSoftware/EPSReactiveCollectionViewController) provides similar functionality for collection view controllers.
+
 ## Usage
 
 Subclass `EPSReactiveTableViewController`, and write an `init` method which calls `initWithStyle:bindingToKeyPath:onObject:` on `super` to set up the binding. The value at the key path must always be an `NSArray` containing objects that implement `-isEqual:` and `-hash`. No object should appear in the array more than once. In the `init` method, register a cell class for use with the class of object that will be contained in the observed array. (The cell class must conform to `<EPSReactiveTableViewCell>`.)
