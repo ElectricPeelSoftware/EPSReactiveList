@@ -41,10 +41,10 @@
  A signal which sends a \c RACTuple with the object corresponding to the selected row, the index path of the selected row, and the table view.
  
  @code
- [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
-     RACTupleUnpack(id object, NSIndexPath *indexPath, UITableView *tableView) = tuple;
-     // Do something with `object`.
- }
+[self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
+    RACTupleUnpack(id object, NSIndexPath *indexPath, UITableView *tableView) = tuple;
+    // Do something with `object`.
+}
  @endcode
  */
 @property (readonly, nonatomic) RACSignal *didSelectRowSignal;
