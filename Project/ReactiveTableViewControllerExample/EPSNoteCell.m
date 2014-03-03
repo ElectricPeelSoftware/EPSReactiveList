@@ -16,6 +16,7 @@
     _object = object;
     
     self.textLabel.text = object.text;
+    self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 }
 
 @end

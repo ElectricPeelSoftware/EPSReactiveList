@@ -38,7 +38,7 @@
 @property (nonatomic) UITableViewRowAnimation deleteAnimation;
 
 /**
- A signal which sends a \c RACTuple with the object corresponding to the selected row, the index path of the selected row, and the table view.
+ A signal which sends a \c RACTuple with the object corresponding to the selected row, the index path of the selected row, and the table view, whenever a row is selected.
  
  @code
 [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
@@ -48,6 +48,11 @@
  @endcode
  */
 @property (readonly, nonatomic) RACSignal *didSelectRowSignal;
+
+/**
+ A signal which sends a \c RACTuple with the object corresponding to the row whose accessory was tapped, the index path of the row, and the table view, whenever an accessory is tapped.
+ */
+@property (readonly, nonatomic) RACSignal *accessoryButtonTappedSignal;
 
 /**
  @param object An object in the observed array.
