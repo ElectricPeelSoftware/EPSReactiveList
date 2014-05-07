@@ -8,6 +8,8 @@
 
 #import "EPSReactiveTableViewController.h"
 
+#import "EPSChangeObserver.h"
+
 #import <ReactiveCocoa/RACEXTScope.h>
 #import <ReactiveCocoa/RACEXTKeyPathCoding.h>
 
@@ -16,30 +18,29 @@
 @property (readwrite, nonatomic) RACSignal *didSelectRowSignal;
 @property (readwrite, nonatomic) RACSignal *accessoryButtonTappedSignal;
 
-@property (nonatomic) NSArray *objects;
+@property (nonatomic) EPSChangeObserver *changeObserver;
 @property (nonatomic) NSDictionary *identifiersForClasses;
 
 @end
 
 @implementation EPSReactiveTableViewController
 
+@synthesize animateChanges = _animateChanges;
+
 #pragma mark - Public Methods
 
-- (id)initWithStyle:(UITableViewStyle)style bindingToKeyPath:(NSString *)keyPath onObject:(id)object {
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self == nil) return nil;
     
     _animateChanges = YES;
     _insertAnimation = UITableViewRowAnimationAutomatic;
     _deleteAnimation = UITableViewRowAnimationAutomatic;
+    _changeObserver = [EPSChangeObserver new];
     _identifiersForClasses = @{};
     
-    RAC(self, objects) = [[object
-        rac_valuesForKeyPath:keyPath observer:self]
-        deliverOn:[RACScheduler mainThreadScheduler]];
-    
     RACSignal *didSelectMethodSignal = [self rac_signalForSelector:@selector(tableView:didSelectRowAtIndexPath:)];
-    RACSignal *objectsWhenSelected = [RACObserve(self, objects) sample:didSelectMethodSignal];
+    RACSignal *objectsWhenSelected = [RACObserve(self.changeObserver, objects) sample:didSelectMethodSignal];
     
     self.didSelectRowSignal = [[didSelectMethodSignal
         zipWith:objectsWhenSelected]
@@ -51,7 +52,7 @@
         }];
     
     RACSignal *accessoryTappedSignal = [self rac_signalForSelector:@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)];
-    RACSignal *objectsWhenAccessoryTapped = [RACObserve(self, objects) sample:accessoryTappedSignal];
+    RACSignal *objectsWhenAccessoryTapped = [RACObserve(self.changeObserver, objects) sample:accessoryTappedSignal];
 
     self.accessoryButtonTappedSignal = [[accessoryTappedSignal
         zipWith:objectsWhenAccessoryTapped]
@@ -65,6 +66,10 @@
     return self;
 }
 
+- (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
+    [self.changeObserver setBindingToKeyPath:keyPath onObject:object];
+}
+
 - (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass {
     NSString *identifier = [EPSReactiveTableViewController identifierFromCellClass:cellClass objectClass:objectClass];
     [self.tableView registerClass:cellClass forCellReuseIdentifier:identifier];
@@ -75,11 +80,11 @@
 }
 
 - (NSIndexPath *)indexPathForObject:(id)object {
-    return [NSIndexPath indexPathForRow:[self.objects indexOfObject:object] inSection:0];
+    return [NSIndexPath indexPathForRow:[self.changeObserver.objects indexOfObject:object] inSection:0];
 }
 
 - (id)objectForIndexPath:(NSIndexPath *)indexPath {
-    return [EPSReactiveTableViewController objectForIndexPath:indexPath inArray:self.objects];
+    return [EPSReactiveTableViewController objectForIndexPath:indexPath inArray:self.changeObserver.objects];
 }
 
 + (id)objectForIndexPath:(NSIndexPath *)indexPath inArray:(NSArray *)array {
@@ -93,57 +98,14 @@
 
     @weakify(self);
     
-    RACSignal *changeSignal = [[self rac_valuesAndChangesForKeyPath:@keypath(self.objects) options:NSKeyValueObservingOptionOld observer:nil]
-        map:^RACTuple *(RACTuple *tuple) {
-            RACTupleUnpack(NSArray *newObjects, NSDictionary *changeDictionary) = tuple;
-            id oldObjects = changeDictionary[NSKeyValueChangeOldKey];
-            
-            NSArray *oldObjectsArray;
-            if (oldObjects == [NSNull null]) oldObjectsArray = @[];
-            else oldObjectsArray = oldObjects;
-            
-            NSArray *rowsToRemove;
-            
-            rowsToRemove = [[[oldObjectsArray.rac_sequence
-                filter:^BOOL(id object) {
-                    return [newObjects containsObject:object] == NO;
-                }]
-                map:^NSIndexPath *(id object) {
-                    return [NSIndexPath indexPathForRow:[oldObjects indexOfObject:object] inSection:0];
-                }]
-                array];
-            
-            NSArray *rowsToInsert = [[[newObjects.rac_sequence
-                filter:^BOOL(id object) {
-                    return ([oldObjectsArray containsObject:object] == NO);
-                }]
-                map:^NSIndexPath *(id object) {
-                    return [NSIndexPath indexPathForRow:[newObjects indexOfObject:object] inSection:0];
-                }]
-                array];
-            
-            return RACTuplePack(rowsToRemove, rowsToInsert);
-        }];
-    
-    [[changeSignal
-        // Take only the first value so that we can reload the table view
-        take:1]
-        subscribeNext:^(id x) {
-            @strongify(self);
-            
-            [self.tableView reloadData];
-        }];
-    
-    [[changeSignal
-        // Skip the first value since those changes shouldn't be animated
-        skip:1]
+    [self.changeObserver.changeSignal
         subscribeNext:^(RACTuple *tuple) {
             RACTupleUnpack(NSArray *rowsToRemove, NSArray *rowsToInsert) = tuple;
             
             @strongify(self);
             
             BOOL onlyOrderChanged = (rowsToRemove.count == 0) &&
-                                    (rowsToInsert.count == 0);
+            (rowsToInsert.count == 0);
             
             if (self.animateChanges == YES && onlyOrderChanged == NO) {
                 [self.tableView beginUpdates];
@@ -172,7 +134,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return self.changeObserver.objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -183,10 +145,10 @@
         return [self tableView:tableView cellForObject:object atIndexPath:indexPath];
     }
     
-    UITableViewCell <EPSReactiveTableViewCell> *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    UITableViewCell <EPSReactiveListCell> *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-    if ([[cell class] conformsToProtocol:@protocol(EPSReactiveTableViewCell)] == NO) {
-        NSLog(@"EPSReactiveTableViewController Error: %@ does not conform to the <EPSReactiveTableViewCell> protocol.", NSStringFromClass([cell class]));
+    if ([[cell class] conformsToProtocol:@protocol(EPSReactiveListCell)] == NO) {
+        NSLog(@"EPSReactiveTableViewController Error: %@ does not conform to the <EPSReactiveListCell> protocol.", NSStringFromClass([cell class]));
     }
     
     cell.object = object;
@@ -200,6 +162,10 @@
     [self tableView:tableView didSelectRowForObject:[self objectForIndexPath:indexPath] atIndexPath:indexPath];
 }
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self tableView:tableView accessoryButtonTappedForObject:[self objectForIndexPath:indexPath] atIndexPath:indexPath];
+}
+
 #pragma mark - For Subclasses
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
@@ -208,6 +174,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
 }
 
 @end

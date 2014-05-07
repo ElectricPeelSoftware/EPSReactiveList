@@ -12,7 +12,7 @@
 
 @interface EPSExampleViewModel : NSObject
 
-@property (nonatomic) NSArray *sortedNotes;
+@property (readonly, nonatomic) NSArray *sortedNotes;
 
 @property (nonatomic) BOOL sortAscending;
 

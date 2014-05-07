@@ -15,34 +15,40 @@
 		D082128A18B945C2003660E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D082128918B945C2003660E6 /* main.m */; };
 		D082128E18B945C2003660E6 /* EPSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D082128D18B945C2003660E6 /* EPSAppDelegate.m */; };
 		D082129018B945C2003660E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D082128F18B945C2003660E6 /* Images.xcassets */; };
-		D08212B018B94620003660E6 /* EPSExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08212AD18B94620003660E6 /* EPSExampleViewController.m */; };
+		D08212B018B94620003660E6 /* EPSExampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08212AD18B94620003660E6 /* EPSExampleTableViewController.m */; };
 		D08212B118B94620003660E6 /* EPSExampleViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D08212AF18B94620003660E6 /* EPSExampleViewModel.m */; };
 		D0844FA118C1268400A51DEB /* EPSNote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0844FA018C1268400A51DEB /* EPSNote.m */; };
 		D0844FA418C1278700A51DEB /* EPSNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0844FA318C1278700A51DEB /* EPSNoteCell.m */; };
+		D0BC6CD8191803560077722E /* EPSExampleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6CD7191803560077722E /* EPSExampleCollectionViewController.m */; };
+		D0BC6CDB1918036B0077722E /* EPSNoteCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6CDA1918036B0077722E /* EPSNoteCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B7A65E7B8F894EB79E74F2EF /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		D082127A18B945C2003660E6 /* ReactiveTableViewControllerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveTableViewControllerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D082127A18B945C2003660E6 /* ReactiveListExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveListExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D082127D18B945C2003660E6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D082127F18B945C2003660E6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D082128118B945C2003660E6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D082128518B945C2003660E6 /* ReactiveTableViewControllerExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ReactiveTableViewControllerExample-Info.plist"; sourceTree = "<group>"; };
+		D082128518B945C2003660E6 /* ReactiveListExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ReactiveListExample-Info.plist"; sourceTree = "<group>"; };
 		D082128718B945C2003660E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D082128918B945C2003660E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D082128B18B945C2003660E6 /* ReactiveTableViewControllerExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactiveTableViewControllerExample-Prefix.pch"; sourceTree = "<group>"; };
+		D082128B18B945C2003660E6 /* ReactiveListExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactiveListExample-Prefix.pch"; sourceTree = "<group>"; };
 		D082128C18B945C2003660E6 /* EPSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPSAppDelegate.h; sourceTree = "<group>"; };
 		D082128D18B945C2003660E6 /* EPSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPSAppDelegate.m; sourceTree = "<group>"; };
 		D082128F18B945C2003660E6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D082129618B945C2003660E6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D08212AC18B94620003660E6 /* EPSExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSExampleViewController.h; sourceTree = "<group>"; };
-		D08212AD18B94620003660E6 /* EPSExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSExampleViewController.m; sourceTree = "<group>"; };
+		D08212AC18B94620003660E6 /* EPSExampleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSExampleTableViewController.h; sourceTree = "<group>"; };
+		D08212AD18B94620003660E6 /* EPSExampleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSExampleTableViewController.m; sourceTree = "<group>"; };
 		D08212AE18B94620003660E6 /* EPSExampleViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSExampleViewModel.h; sourceTree = "<group>"; };
 		D08212AF18B94620003660E6 /* EPSExampleViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSExampleViewModel.m; sourceTree = "<group>"; };
 		D0844F9F18C1268400A51DEB /* EPSNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSNote.h; sourceTree = "<group>"; };
 		D0844FA018C1268400A51DEB /* EPSNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSNote.m; sourceTree = "<group>"; };
 		D0844FA218C1278700A51DEB /* EPSNoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSNoteCell.h; sourceTree = "<group>"; };
 		D0844FA318C1278700A51DEB /* EPSNoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSNoteCell.m; sourceTree = "<group>"; };
+		D0BC6CD6191803560077722E /* EPSExampleCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSExampleCollectionViewController.h; sourceTree = "<group>"; };
+		D0BC6CD7191803560077722E /* EPSExampleCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSExampleCollectionViewController.m; sourceTree = "<group>"; };
+		D0BC6CD91918036B0077722E /* EPSNoteCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSNoteCollectionViewCell.h; sourceTree = "<group>"; };
+		D0BC6CDA1918036B0077722E /* EPSNoteCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSNoteCollectionViewCell.m; sourceTree = "<group>"; };
 		DC44290BCD364A759D887206 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -64,7 +70,7 @@
 		D082127118B945C2003660E6 = {
 			isa = PBXGroup;
 			children = (
-				D082128318B945C2003660E6 /* ReactiveTableViewControllerExample */,
+				D082128318B945C2003660E6 /* ReactiveListExample */,
 				D082127C18B945C2003660E6 /* Frameworks */,
 				D082127B18B945C2003660E6 /* Products */,
 				B7A65E7B8F894EB79E74F2EF /* Pods.xcconfig */,
@@ -74,7 +80,7 @@
 		D082127B18B945C2003660E6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D082127A18B945C2003660E6 /* ReactiveTableViewControllerExample.app */,
+				D082127A18B945C2003660E6 /* ReactiveListExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,7 +97,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D082128318B945C2003660E6 /* ReactiveTableViewControllerExample */ = {
+		D082128318B945C2003660E6 /* ReactiveListExample */ = {
 			isa = PBXGroup;
 			children = (
 				D082128C18B945C2003660E6 /* EPSAppDelegate.h */,
@@ -100,16 +106,17 @@
 				D082128F18B945C2003660E6 /* Images.xcassets */,
 				D082128418B945C2003660E6 /* Supporting Files */,
 			);
+			name = ReactiveListExample;
 			path = ReactiveTableViewControllerExample;
 			sourceTree = "<group>";
 		};
 		D082128418B945C2003660E6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D082128518B945C2003660E6 /* ReactiveTableViewControllerExample-Info.plist */,
+				D082128518B945C2003660E6 /* ReactiveListExample-Info.plist */,
 				D082128618B945C2003660E6 /* InfoPlist.strings */,
 				D082128918B945C2003660E6 /* main.m */,
-				D082128B18B945C2003660E6 /* ReactiveTableViewControllerExample-Prefix.pch */,
+				D082128B18B945C2003660E6 /* ReactiveListExample-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -117,14 +124,18 @@
 		D08212B218B94664003660E6 /* Example View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D08212AC18B94620003660E6 /* EPSExampleViewController.h */,
-				D08212AD18B94620003660E6 /* EPSExampleViewController.m */,
+				D0BC6CD6191803560077722E /* EPSExampleCollectionViewController.h */,
+				D0BC6CD7191803560077722E /* EPSExampleCollectionViewController.m */,
+				D08212AC18B94620003660E6 /* EPSExampleTableViewController.h */,
+				D08212AD18B94620003660E6 /* EPSExampleTableViewController.m */,
 				D08212AE18B94620003660E6 /* EPSExampleViewModel.h */,
 				D08212AF18B94620003660E6 /* EPSExampleViewModel.m */,
 				D0844F9F18C1268400A51DEB /* EPSNote.h */,
 				D0844FA018C1268400A51DEB /* EPSNote.m */,
 				D0844FA218C1278700A51DEB /* EPSNoteCell.h */,
 				D0844FA318C1278700A51DEB /* EPSNoteCell.m */,
+				D0BC6CD91918036B0077722E /* EPSNoteCollectionViewCell.h */,
+				D0BC6CDA1918036B0077722E /* EPSNoteCollectionViewCell.m */,
 			);
 			name = "Example View Controller";
 			sourceTree = "<group>";
@@ -132,9 +143,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D082127918B945C2003660E6 /* ReactiveTableViewControllerExample */ = {
+		D082127918B945C2003660E6 /* ReactiveListExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D08212A618B945C2003660E6 /* Build configuration list for PBXNativeTarget "ReactiveTableViewControllerExample" */;
+			buildConfigurationList = D08212A618B945C2003660E6 /* Build configuration list for PBXNativeTarget "ReactiveListExample" */;
 			buildPhases = (
 				0F9A3F3072814273922AB447 /* Check Pods Manifest.lock */,
 				D082127618B945C2003660E6 /* Sources */,
@@ -146,9 +157,9 @@
 			);
 			dependencies = (
 			);
-			name = ReactiveTableViewControllerExample;
+			name = ReactiveListExample;
 			productName = ReactiveTableViewControllerExample;
-			productReference = D082127A18B945C2003660E6 /* ReactiveTableViewControllerExample.app */;
+			productReference = D082127A18B945C2003660E6 /* ReactiveListExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -158,10 +169,10 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = EPS;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Electric Peel, LLC";
 			};
-			buildConfigurationList = D082127518B945C2003660E6 /* Build configuration list for PBXProject "ReactiveTableViewControllerExample" */;
+			buildConfigurationList = D082127518B945C2003660E6 /* Build configuration list for PBXProject "ReactiveListExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -173,7 +184,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D082127918B945C2003660E6 /* ReactiveTableViewControllerExample */,
+				D082127918B945C2003660E6 /* ReactiveListExample */,
 			);
 		};
 /* End PBXProject section */
@@ -230,9 +241,11 @@
 			files = (
 				D0844FA418C1278700A51DEB /* EPSNoteCell.m in Sources */,
 				D08212B118B94620003660E6 /* EPSExampleViewModel.m in Sources */,
+				D0BC6CD8191803560077722E /* EPSExampleCollectionViewController.m in Sources */,
+				D0BC6CDB1918036B0077722E /* EPSNoteCollectionViewCell.m in Sources */,
 				D082128A18B945C2003660E6 /* main.m in Sources */,
 				D0844FA118C1268400A51DEB /* EPSNote.m in Sources */,
-				D08212B018B94620003660E6 /* EPSExampleViewController.m in Sources */,
+				D08212B018B94620003660E6 /* EPSExampleTableViewController.m in Sources */,
 				D082128E18B945C2003660E6 /* EPSAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,7 +268,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -294,7 +306,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -330,9 +341,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ReactiveTableViewControllerExample/ReactiveTableViewControllerExample-Prefix.pch";
-				INFOPLIST_FILE = "ReactiveTableViewControllerExample/ReactiveTableViewControllerExample-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ReactiveTableViewControllerExample/ReactiveListExample-Prefix.pch";
+				INFOPLIST_FILE = "ReactiveTableViewControllerExample/ReactiveListExample-Info.plist";
+				PRODUCT_NAME = ReactiveListExample;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -344,9 +355,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ReactiveTableViewControllerExample/ReactiveTableViewControllerExample-Prefix.pch";
-				INFOPLIST_FILE = "ReactiveTableViewControllerExample/ReactiveTableViewControllerExample-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ReactiveTableViewControllerExample/ReactiveListExample-Prefix.pch";
+				INFOPLIST_FILE = "ReactiveTableViewControllerExample/ReactiveListExample-Info.plist";
+				PRODUCT_NAME = ReactiveListExample;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -354,7 +365,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D082127518B945C2003660E6 /* Build configuration list for PBXProject "ReactiveTableViewControllerExample" */ = {
+		D082127518B945C2003660E6 /* Build configuration list for PBXProject "ReactiveListExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D08212A418B945C2003660E6 /* Debug */,
@@ -363,7 +374,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D08212A618B945C2003660E6 /* Build configuration list for PBXNativeTarget "ReactiveTableViewControllerExample" */ = {
+		D08212A618B945C2003660E6 /* Build configuration list for PBXNativeTarget "ReactiveListExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D08212A718B945C2003660E6 /* Debug */,
