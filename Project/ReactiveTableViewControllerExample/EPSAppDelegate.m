@@ -19,7 +19,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[EPSExampleCollectionViewController new]];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[EPSExampleTableViewController new]];
     
     return YES;
 }
