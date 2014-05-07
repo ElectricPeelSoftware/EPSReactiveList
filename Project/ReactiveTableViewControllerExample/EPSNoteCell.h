@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import <EPSReactiveTableViewController/EPSReactiveTableViewController.h>
+#import <EPSReactiveList/EPSReactiveTableViewController.h>
 
 @class EPSNote;
 
-@interface EPSNoteCell : UITableViewCell <EPSReactiveTableViewCell>
+@interface EPSNoteCell : UITableViewCell <EPSReactiveListCell>
 
 @property (nonatomic, strong) EPSNote *object;
 

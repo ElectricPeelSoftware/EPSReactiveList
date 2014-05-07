@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Electric Peel, LLC. All rights reserved.
 //
 
-#import "EPSExampleViewController.h"
+#import "EPSExampleTableViewController.h"
 
 #import "EPSExampleViewModel.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -14,21 +14,21 @@
 #import "EPSNote.h"
 #import "EPSNoteCell.h"
 
-@interface EPSExampleViewController ()
+@interface EPSExampleTableViewController ()
 
 @property (nonatomic) EPSExampleViewModel *viewModel;
 
 @end
 
-@implementation EPSExampleViewController
+@implementation EPSExampleTableViewController
 
 - (id)init
 {
-    EPSExampleViewModel *viewModel = [EPSExampleViewModel new];
-    self = [super initWithStyle:UITableViewStylePlain bindingToKeyPath:@keypath(viewModel, sortedNotes) onObject:viewModel];
+    self = [super initWithStyle:UITableViewStylePlain];
     if (self == nil) return nil;
     
-    _viewModel = viewModel;
+    _viewModel = [EPSExampleViewModel new];
+    [self setBindingToKeyPath:@"sortedNotes" onObject:_viewModel];
     
     [self registerCellClass:[EPSNoteCell class] forObjectsWithClass:[EPSNote class]];
     
@@ -46,26 +46,6 @@
             else return @NO;
         }];
     
-    // Show an alert when a row is tapped
-    [self.didSelectRowSignal subscribeNext:^(RACTuple *tuple) {
-        RACTupleUnpack(EPSNote *note, NSIndexPath *indexPath, UITableView *tableView) = tuple;
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Selected: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }];
-    
-    // Show an alert when an accessory is tapped
-    [self.accessoryButtonTappedSignal subscribeNext:^(RACTuple *tuple) {
-        RACTupleUnpack(EPSNote *note, NSIndexPath *indexPath, UITableView *tableView) = tuple;
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Accessory: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }];
-    
     return self;
 }
 
@@ -79,6 +59,23 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     EPSNote *note = [self objectForIndexPath:indexPath];
     [self.viewModel removeNote:note];
+}
+
+#pragma mark - EPSReactiveTableViewControllerDelegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowForObject:(EPSNote *)note atIndexPath:(NSIndexPath *)indexPath {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Selected: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForObject:(EPSNote *)note atIndexPath:(NSIndexPath *)indexPath {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Accessory: %@", note.text] message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

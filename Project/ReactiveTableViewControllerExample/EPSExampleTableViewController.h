@@ -8,6 +8,6 @@
 
 #import "EPSReactiveTableViewController.h"
 
-@interface EPSExampleViewController : EPSReactiveTableViewController
+@interface EPSExampleTableViewController : EPSReactiveTableViewController
 
 @end
