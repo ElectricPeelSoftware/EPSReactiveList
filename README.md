@@ -2,6 +2,8 @@
 
 EPSReactiveList provides subclasses of `UITableViewController` and `UICollectionViewController` that automatically populate a table/collection view, and animates the insertion and deletion of rows/items by observing changes to an array of model objects. It uses [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa), and is designed to be used with the [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel) pattern.
 
+EPSReactiveList replaces [EPSReactiveTableViewController](https://github.com/ElectricPeelSoftware/EPSReactiveTableViewController) and [EPSReactiveCollectionViewController](https://github.com/ElectricPeelSoftware/EPSReactiveCollectionViewController).
+
 ## Usage
 
 Subclass either `EPSReactiveTableViewController` or `EPSReactiveCollectionViewController`, and write an `init` method which calls `setBindingToKeyPath:onObject:` to set up the binding. The value at the key path must always be an `NSArray` containing objects that implement `-isEqual:` and `-hash`. No object should appear in the array more than once. In the `init` method, register a cell class for use with the class of object that will be contained in the observed array. (The cell class must conform to `<EPSReactiveListCell>`.)
