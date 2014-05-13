@@ -92,7 +92,12 @@
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
     RAC(self, objects) = [[object rac_valuesForKeyPath:keyPath observer:self]
         map:^NSArray *(NSArray *array) {
-            return @[ array ];
+            if (array == nil) {
+                return @[ @[] ];
+            }
+            else {
+                return @[ array ];
+            }
         }];
 }
 
