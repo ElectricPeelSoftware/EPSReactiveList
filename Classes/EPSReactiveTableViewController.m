@@ -67,7 +67,11 @@
 }
 
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
-    [self.changeObserver setBindingToKeyPath:keyPath onObject:object];
+[self.changeObserver setBindingToKeyPath:keyPath onObject:object];
+}
+
+- (void)setSectionBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
+    [self.changeObserver setSectionBindingToKeyPath:keyPath onObject:object];
 }
 
 - (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass {
@@ -80,7 +84,7 @@
 }
 
 - (NSIndexPath *)indexPathForObject:(id)object {
-    return [NSIndexPath indexPathForRow:[self.changeObserver.objects indexOfObject:object] inSection:0];
+    return [EPSChangeObserver indexPathOfObject:object inSectionsArray:self.changeObserver.objects];
 }
 
 - (id)objectForIndexPath:(NSIndexPath *)indexPath {
@@ -88,7 +92,7 @@
 }
 
 + (id)objectForIndexPath:(NSIndexPath *)indexPath inArray:(NSArray *)array {
-    return array[indexPath.row];
+    return array[indexPath.section][indexPath.row];
 }
 
 #pragma mark - Private Methods
@@ -130,11 +134,11 @@
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.changeObserver.objects.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.changeObserver.objects.count;
+    return [self.changeObserver.objects[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

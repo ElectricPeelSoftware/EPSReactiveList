@@ -15,6 +15,9 @@
 @property (readonly, nonatomic) NSArray *objects;
 @property (readonly, nonatomic) RACSignal *changeSignal;
 
++ (NSIndexPath *)indexPathOfObject:(id)object inSectionsArray:(NSArray *)sections;
+
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object;
+- (void)setSectionBindingToKeyPath:(NSString *)keyPath onObject:(id)object;
 
 @end

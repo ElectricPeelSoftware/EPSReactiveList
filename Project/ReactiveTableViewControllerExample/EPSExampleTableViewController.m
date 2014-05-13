@@ -28,8 +28,8 @@
     if (self == nil) return nil;
     
     _viewModel = [EPSExampleViewModel new];
-    [self setBindingToKeyPath:@"sortedNotes" onObject:_viewModel];
-    
+    [self setSectionBindingToKeyPath:@"sortedNotes" onObject:_viewModel];
+
     [self registerCellClass:[EPSNoteCell class] forObjectsWithClass:[EPSNote class]];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -50,15 +50,16 @@
 }
 
 - (void)addObject:(id)sender {
-    EPSNote *note = [EPSNote new];
-    note.text = [NSString stringWithFormat:@"%i", self.viewModel.sortedNotes.count];
-    
-    [self.viewModel addNote:note];
+    [self.viewModel addNote];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     EPSNote *note = [self objectForIndexPath:indexPath];
     [self.viewModel removeNote:note];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.viewModel titleForSection:section];
 }
 
 #pragma mark - EPSReactiveTableViewControllerDelegate Methods

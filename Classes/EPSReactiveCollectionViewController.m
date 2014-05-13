@@ -51,7 +51,7 @@
 }
 
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
-    [self.changeObserver setBindingToKeyPath:keyPath onObject:object];
+    [self.changeObserver setSectionBindingToKeyPath:keyPath onObject:object];
 }
 
 - (void)registerCellClass:(Class)cellClass forObjectsWithClass:(Class)objectClass {

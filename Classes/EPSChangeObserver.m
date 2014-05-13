@@ -24,14 +24,7 @@
 - (id)init {
     self = [super init];
     if (self == nil) return nil;
-    
-    RAC(self, objects) = [[RACSignal
-        zip:@[ [RACObserve(self, object) skip:1], [RACObserve(self, keyPath) skip:1] ]
-        reduce:^RACSignal *(id object, NSString *keyPath){
-            return [object rac_valuesForKeyPath:keyPath observer:self];
-        }]
-        switchToLatest];
-    
+        
     _changeSignal = [[self rac_valuesAndChangesForKeyPath:@"objects" options:NSKeyValueObservingOptionOld observer:nil]
         map:^RACTuple *(RACTuple *tuple) {
             RACTupleUnpack(NSArray *newObjects, NSDictionary *changeDictionary) = tuple;
@@ -40,36 +33,83 @@
             NSArray *oldObjectsArray;
             if (oldObjects == [NSNull null]) oldObjectsArray = @[];
             else oldObjectsArray = oldObjects;
+
+            NSArray *allRowsToRemove = [oldObjectsArray.rac_sequence
+                foldLeftWithStart:@[] reduce:^NSArray *(NSArray *accumulator, NSArray *section) {
+                    NSArray *rowsToRemove = [[[section.rac_sequence
+                        filter:^BOOL(id object) {
+                            return [EPSChangeObserver indexPathOfObject:object inSectionsArray:newObjects] == nil;
+                        }]
+                        map:^NSIndexPath *(id object) {
+                            return [EPSChangeObserver indexPathOfObject:object inSectionsArray:oldObjectsArray];
+                        }]
+                        array];
+                    return [accumulator arrayByAddingObjectsFromArray:rowsToRemove];
+                }];
             
-            NSArray *rowsToRemove;
+            NSArray *allRowsToInsert = [newObjects.rac_sequence
+                foldLeftWithStart:@[] reduce:^NSArray *(NSArray *accumulator, NSArray *section) {
+                    NSArray *rowsToInsert = [[[section.rac_sequence
+                        filter:^BOOL(id object) {
+                            return [EPSChangeObserver indexPathOfObject:object inSectionsArray:oldObjectsArray] == nil;
+                        }]
+                        map:^NSIndexPath *(id object) {
+                            return [EPSChangeObserver indexPathOfObject:object inSectionsArray:newObjects];
+                        }]
+                        array];
+                    return [accumulator arrayByAddingObjectsFromArray:rowsToInsert];
+                }];
             
-            rowsToRemove = [[[oldObjectsArray.rac_sequence
-                filter:^BOOL(id object) {
-                    return [newObjects containsObject:object] == NO;
-                }]
-                map:^NSIndexPath *(id object) {
-                    return [NSIndexPath indexPathForRow:[oldObjects indexOfObject:object] inSection:0];
-                }]
-                array];
+            /*
+            NSDictionary *allRowsToMove = [newObjects.rac_sequence
+                foldLeftWithStart:[NSMutableDictionary new] reduce:^NSDictionary *(NSMutableDictionary *accumulator, NSArray *section) {
+                    NSArray *objectsToMove = [[section.rac_sequence
+                        filter:^BOOL(id object) {
+                            return [EPSChangeObserver indexPathOfObject:object inSectionsArray:oldObjectsArray] != nil;
+                        }]
+                        array];
+                    NSMutableDictionary *rowsToMove = [NSMutableDictionary new];
+                    for (id object in objectsToMove) {
+                        NSIndexPath *oldIndexPath = [EPSChangeObserver indexPathOfObject:object inSectionsArray:oldObjectsArray];
+                        NSIndexPath *newIndexPath = [EPSChangeObserver indexPathOfObject:object inSectionsArray:newObjects];
+                        
+                        if ([oldIndexPath isEqual:newIndexPath] == NO) {
+                            rowsToMove[oldIndexPath] = newIndexPath;
+                        }
+                    }
+                    
+                    [accumulator addEntriesFromDictionary:rowsToMove];
+                    return accumulator;
+                }];
+            */
             
-            NSArray *rowsToInsert = [[[newObjects.rac_sequence
-                filter:^BOOL(id object) {
-                    return ([oldObjectsArray containsObject:object] == NO);
-                }]
-                map:^NSIndexPath *(id object) {
-                    return [NSIndexPath indexPathForRow:[newObjects indexOfObject:object] inSection:0];
-                }]
-                array];
-            
-            return RACTuplePack(rowsToRemove, rowsToInsert);
+            return RACTuplePack(allRowsToRemove, allRowsToInsert);
         }];
     
     return self;
 }
 
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
-    self.object = object;
-    self.keyPath = keyPath;
+    RAC(self, objects) = [[object rac_valuesForKeyPath:keyPath observer:self]
+        map:^NSArray *(NSArray *array) {
+            return @[ array ];
+        }];
+}
+
+- (void)setSectionBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
+    RAC(self, objects) = [object rac_valuesForKeyPath:keyPath observer:self];
+}
+
++ (NSIndexPath *)indexPathOfObject:(id)object inSectionsArray:(NSArray *)sections {
+    for (NSInteger section = 0; section < sections.count; section++) {
+        NSArray *items = sections[section];
+        
+        if ([items containsObject:object]) {
+            return [NSIndexPath indexPathForItem:[items indexOfObject:object] inSection:section];
+        }
+    }
+    
+    return nil;
 }
 
 @end

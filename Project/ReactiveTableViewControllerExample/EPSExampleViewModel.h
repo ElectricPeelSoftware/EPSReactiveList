@@ -16,7 +16,8 @@
 
 @property (nonatomic) BOOL sortAscending;
 
-- (void)addNote:(EPSNote *)object;
+- (void)addNote;
 - (void)removeNote:(EPSNote *)object;
+- (NSString *)titleForSection:(NSInteger)section;
 
 @end

@@ -54,7 +54,7 @@
     EPSNote *note = [EPSNote new];
     note.text = [NSString stringWithFormat:@"%i", self.viewModel.sortedNotes.count];
     
-    [self.viewModel addNote:note];
+//    [self.viewModel addNote:note];
 }
 
 #pragma mark - EPSReactiveCollectionViewControllerDelegate Methods

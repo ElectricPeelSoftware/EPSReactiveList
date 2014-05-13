@@ -21,6 +21,7 @@
 		D0844FA418C1278700A51DEB /* EPSNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0844FA318C1278700A51DEB /* EPSNoteCell.m */; };
 		D0BC6CD8191803560077722E /* EPSExampleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6CD7191803560077722E /* EPSExampleCollectionViewController.m */; };
 		D0BC6CDB1918036B0077722E /* EPSNoteCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6CDA1918036B0077722E /* EPSNoteCollectionViewCell.m */; };
+		D0C8099519224A8900880FF7 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0C8099419224A8900880FF7 /* words.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		D0BC6CD7191803560077722E /* EPSExampleCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSExampleCollectionViewController.m; sourceTree = "<group>"; };
 		D0BC6CD91918036B0077722E /* EPSNoteCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSNoteCollectionViewCell.h; sourceTree = "<group>"; };
 		D0BC6CDA1918036B0077722E /* EPSNoteCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPSNoteCollectionViewCell.m; sourceTree = "<group>"; };
+		D0C8099419224A8900880FF7 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		DC44290BCD364A759D887206 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 		D082128418B945C2003660E6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D0C8099419224A8900880FF7 /* words.txt */,
 				D082128518B945C2003660E6 /* ReactiveListExample-Info.plist */,
 				D082128618B945C2003660E6 /* InfoPlist.strings */,
 				D082128918B945C2003660E6 /* main.m */,
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D082128818B945C2003660E6 /* InfoPlist.strings in Resources */,
+				D0C8099519224A8900880FF7 /* words.txt in Resources */,
 				D082129018B945C2003660E6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,6 +23,8 @@
  */
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object;
 
+- (void)setSectionBindingToKeyPath:(NSString *)keyPath onObject:(id)object;
+
 /**
  @param object An object in the observed array.
  */
