@@ -29,7 +29,7 @@ To respond to taps on cells, override either `-tableView:didSelectRowForObject:a
 }
 ```
 
-You don’t need to write any dat asource methods.
+You don’t need to write any datasource methods.
 
 For more complete examples of how to use `EPSReactiveTableViewController` and `EPSReactiveCollectionViewController`, see the [example project](https://github.com/ElectricPeelSoftware/EPSReactiveList/tree/master/Project).
 
