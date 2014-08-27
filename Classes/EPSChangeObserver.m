@@ -36,13 +36,11 @@
         map:^RACTuple *(RACTuple *tuple) {
             RACTupleUnpack(NSArray *newObjects, NSDictionary *changeDictionary) = tuple;
             id oldObjects = changeDictionary[NSKeyValueChangeOldKey];
-
+            
             NSArray *oldObjectsArray;
-			if (oldObjects == [NSNull null]) {
-				return RACTuplePack (@[], newObjects);
-			} else
-				oldObjectsArray = oldObjects;
-
+            if (oldObjects == [NSNull null]) oldObjectsArray = @[];
+            else oldObjectsArray = oldObjects;
+            
             NSArray *rowsToRemove;
             
             rowsToRemove = [[[oldObjectsArray.rac_sequence
