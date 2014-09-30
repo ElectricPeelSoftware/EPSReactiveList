@@ -31,6 +31,18 @@
     self = [super initWithCollectionViewLayout:layout];
     if (self == nil) return nil;
     
+    [self setup];
+
+    return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self setup];
+}
+
+- (void)setup {
     _animateChanges = YES;
     _changeObserver = [EPSChangeObserver new];
     _identifiersForClasses = @{};
@@ -46,8 +58,6 @@
             id object = [EPSReactiveCollectionViewController objectForIndexPath:indexPath inArray:objects];
             return RACTuplePack(object, indexPath, collectionView);
         }];
-
-    return self;
 }
 
 - (void)setBindingToKeyPath:(NSString *)keyPath onObject:(id)object {
