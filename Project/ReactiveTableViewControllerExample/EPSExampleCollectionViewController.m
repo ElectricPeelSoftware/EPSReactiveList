@@ -52,7 +52,7 @@
 
 - (void)addObject:(id)sender {
     EPSNote *note = [EPSNote new];
-    note.text = [NSString stringWithFormat:@"%i", self.viewModel.sortedNotes.count];
+    note.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.viewModel.sortedNotes.count];
     
     [self.viewModel addNote:note];
 }
